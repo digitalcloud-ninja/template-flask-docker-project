@@ -5,10 +5,9 @@
 help()
 {
   # Display Help
-  echo "This is a simple script create and launch a disposable (testing) container."
-  echo "The container is automatically deleted when container shutdown."
+  echo "This is a simple script create and launch a detached container."
   echo
-  echo "Syntax: ./test [-h]"
+  echo "Syntax: ./start [-h]"
   echo "options:"
   echo "h     Print this Help."
   echo
@@ -22,6 +21,7 @@ help()
 ############################################################
 # Main Program                                             #
 ############################################################
+# shellcheck disable=SC2034
 declare image="docker/python-project:latest"
 # shellcheck disable=SC2034
 declare container="my-application"
@@ -31,5 +31,5 @@ declare port
 if [[ "${1}" = "-h" ]]; then
   help
 else
-  docker run -it --rm --name "${container}-test" "${image}"
+  docker start "${container}"
 fi

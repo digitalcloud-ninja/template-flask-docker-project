@@ -1,11 +1,34 @@
-#!/usr/bin/env bash
-while getopts c:p: flag
-do
-    case "${flag}" in
-        c) container=${OPTARG};;
-        p) publish=${OPTARG};;
-    esac
-done
-echo "Container: $container";
-echo "Port: $publish";
-docker run -d --name $container -v $container-data:/app -p $publish:5000 williammagnuson/python-flask:latest
+#!/bin/bash
+############################################################
+# Help                                                     #
+############################################################
+help()
+{
+  # Display Help
+  echo "This is a simple script create and launch a detached container."
+  echo
+  echo "Syntax: ./run [-h]"
+  echo "options:"
+  echo "h     Print this Help."
+  echo
+  echo "When setting up the project define the variables:"
+  echo "-  image: repository-url/project-name:tag"
+  echo "-  container: charlie-brown-xmas"
+  echo "-  port: port to expose (8080)"
+  echo
+}
+
+############################################################
+# Main Program                                             #
+############################################################
+declare image="docker/python-project:latest"
+# shellcheck disable=SC2034
+declare container="my-application"
+# shellcheck disable=SC2034
+declare port
+
+if [[ "${1}" = "-h" ]]; then
+  help
+else
+  docker run -it -d -v "${container}"-data:/application --name "${container}" "${image}"
+fi
